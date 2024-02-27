@@ -1,0 +1,78 @@
+basePath: /api/v1
+definitions:
+  model.BlogPost:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a blog API.
+  title: Blog API
+  version: "1.0"
+paths:
+  /api/v1/blog/posts:
+    get:
+      consumes:
+      - application/json
+      description: 全てのブログ記事のリストを取得します。
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.BlogPost'
+            type: array
+      summary: ブログ記事リストを取得
+      tags:
+      - blog
+    post:
+      consumes:
+      - application/json
+      description: 新しいブログ記事を作成します。
+      parameters:
+      - description: ブログ記事
+        in: body
+        name: blogPost
+        required: true
+        schema:
+          $ref: '#/definitions/model.BlogPost'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.BlogPost'
+      summary: 新しいブログ記事を作成
+      tags:
+      - blog
+  /api/v1/blog/posts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 指定されたIDのブログ記事を取得します。
+      parameters:
+      - description: 記事ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BlogPost'
+      summary: 特定のブログ記事を取得
+      tags:
+      - blog
+swagger: "2.0"
